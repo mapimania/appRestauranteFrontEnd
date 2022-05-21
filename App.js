@@ -7,13 +7,17 @@ import { createStackNavigator } from "@react-navigation/stack";
 
 import MenuView from "./views/menu";
 import PedidoView from "./views/pedido";
+import OrdenesView from "./views/Ordenes";
+import OrdenView from "./views/Orden";
+import CategoriesView from "./views/Categories";
+import ProductosView from "./views/Productos";
 
 const Stack = createStackNavigator();
 
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={"Menu"}>
+      <Stack.Navigator initialRouteName={"Ordenes"}>
         <Stack.Screen
           name="Menu"
           component={MenuView}
@@ -24,6 +28,28 @@ export default function App() {
           component={PedidoView}
           options={{ title: "Pedido Section" }}
         />
+        <Stack.Screen
+          name="Ordenes"
+          component={OrdenesView}
+          options={{ title: "Ordenes Section" }}
+        />
+         <Stack.Screen
+          name="Orden"
+          component={OrdenView}
+          options={{ title: "Orden Section" }}
+        />
+        <Stack.Screen
+          name="Productos"
+          component={ProductosView}
+          options={{ title: "Productos Section" }}
+        />
+        <Stack.Screen
+          name="Categories"
+          component={CategoriesView}
+          options={{ title: "Categorias Section" }}
+        />
+        
+        
       </Stack.Navigator>
     </NavigationContainer>
   );
