@@ -34,9 +34,6 @@ export default function Odenes({navigation}){
                             secondaryText={item.status}
                             onPress={() => navigation.navigate("Menu")}
                         />
-                            
-                        
-
                     )}
                 />
         </View>

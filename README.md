@@ -9,5 +9,5 @@ yarn add react-native-gesture-handler    (libreria)
 yarn add react-native-safe-area-context   (libreria)
 yarn add react-native-safe-area-view  (libreria)
 cls (para limpiar la consola)
-
+npm install axios
 expo start (iniciar la app)

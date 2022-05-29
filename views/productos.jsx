@@ -4,6 +4,7 @@ import { ListItem, List } from "@react-native-material/core";
 import Icon from "@expo/vector-icons/MaterialCommunityIcons";
 
 
+//this.state = {idCategoria:setState.idCategoria}; recibiendo el id de categories
 
 export default function Productos({}){
     const DATA = [
@@ -26,7 +27,6 @@ export default function Productos({}){
     ];
     return(
         <View>
-            
             <FlatList
                 data={DATA}
                 renderItem={({item}) => (

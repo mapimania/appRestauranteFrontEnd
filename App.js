@@ -31,7 +31,7 @@ export default function App() {
         <Stack.Screen
           name="Ordenes"
           component={OrdenesView}
-          options={{ title: "Ordenes Section" }}
+          options={{ title: "Menu principal" }}
         />
          <Stack.Screen
           name="Orden"
@@ -46,9 +46,8 @@ export default function App() {
         <Stack.Screen
           name="Categories"
           component={CategoriesView}
-          options={{ title: "Categorias Section" }}
+          options={{ title: "Elige la categoria" }}
         />
-        
         
       </Stack.Navigator>
     </NavigationContainer>
