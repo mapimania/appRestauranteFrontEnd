@@ -1,11 +1,11 @@
 {
   "expo": {
-    "name": "app-restaurante",
-    "slug": "app-restaurante",
+    "name": "AppRestaurante",
+    "slug": "AppRestaurante",
+    "owner": "mapimania",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
@@ -24,10 +24,21 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
-      }
+      },
+      "package": "com.gicaor.appverificacion"
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "packagerOpts": {
+      "config": "metro.config.js",
+      "sourceExts": [
+        "js",
+        "jsx",
+        "scss",
+        "sass",
+        "ttf"
+      ]
     }
   }
 }

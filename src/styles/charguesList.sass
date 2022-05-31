@@ -1,0 +1,37 @@
+@import 'colors'
+
+%charguerow
+  padding: 1rem
+
+.surtida
+  @extend %charguerow
+  background-color: $green-60
+  //border top and bottom
+  border: 1px solid #000
+
+.nosurtida
+  @extend %charguerow
+  background-color: #dddddd
+  border: 1px solid #000
+
+.row
+  display: flex
+  flex-direction: row
+  justify-content: space-between
+  align-items: center
+
+.rowTitle
+  font-size: 1.2rem
+
+.rowSubtitle
+  font-size: 1.1rem
+
+.rowSubtitle2
+  font-size: 1.1rem
+  color: rgba(0, 0, 0, 0.50)
+
+.rowDetail
+  font-size: 1rem
+  color: #00000080
+
+
