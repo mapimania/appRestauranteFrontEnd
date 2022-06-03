@@ -1,56 +1,49 @@
-import React, { useContext, useState, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   View,
   Image,
   KeyboardAvoidingView,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
-import { Button, Input, Text } from "react-native-elements";
-import axios from "axios";
+import { Button, Text } from "react-native-elements";
 import Appstyles from "../styles/ordenes.sass";
-import LOGO_TTK from "../img/LOGO_TTK.png";
+import LOGO_PIZZA from "../img/LOGO_PIZZA.png";
 import { StatusBar } from "expo-status-bar";
-import { AppContext } from "../context/userContext";
+import axios from "axios";
+import Orden from "../components/Orden";
 
 const OrdenesView = ({ navigation }) => {
-  const DATA = [
-    {
-      id: "001",
-      cliente: "Juan",
-      status: "Preparacion",
-    },
-    {
-      id: "002",
-      cliente: "luis",
-      status: "entregado",
-    },
-    {
-      id: "003",
-      cliente: "Maria",
-      status: "preparacion",
-    },
-  ];
+  const [state, setState] = useState(null);
+  const [comanda, setComanda] = useState(null);
+  useEffect(() => {
+    axios
+      .get("http://192.168.100.24:3000/comandas")
+      .then(function (response) {
+        setState(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  }, []);
 
   const Item = ({ item, onPress }) => (
     <TouchableOpacity onPress={onPress} style={Appstyles.textlistprincipal}>
       <Text style={Appstyles.textlistpr}>{item.cliente}</Text>
-      <Text style={Appstyles.textlist}>{item.status}</Text>
+      <Text style={Appstyles.textlist}>{item.estado}</Text>
     </TouchableOpacity>
   );
 
   const [selectedId, setSelectedId] = useState(null);
 
   const renderItem = ({ item }) => {
-    const backgroundColor = item.id === selectedId ? "#6e3b6e" : "#f9c2ff";
-    const color = item.id === selectedId ? "white" : "black";
-
     return (
       <Item
         item={item}
-        onPress={() => setSelectedId(item.id)}
-        backgroundColor={{ backgroundColor }}
-        textColor={{ color }}
+        onPress={() => {
+          setSelectedId(item.idComanda);
+        }}
       />
     );
   };
@@ -61,7 +54,7 @@ const OrdenesView = ({ navigation }) => {
       <KeyboardAvoidingView style={Appstyles.container} behavior="padding">
         <View style={Appstyles.logoContainer}>
           <Image
-            source={LOGO_TTK}
+            source={LOGO_PIZZA}
             style={{ ...Appstyles.logo, resizeMode: "contain" }}
           />
         </View>
@@ -72,7 +65,7 @@ const OrdenesView = ({ navigation }) => {
         </View>
         <View style={Appstyles.loginForm}>
           <Button
-            title="Nueva Orden"
+            title="Nueva Comanda"
             titleStyle={{
               fontWeight: "500",
               color: "black",
@@ -87,14 +80,42 @@ const OrdenesView = ({ navigation }) => {
             containerStyle={{
               width: "100%",
             }}
-            onPress={() => navigation.navigate("Orden")}
+            onPress={() => {
+              Alert.alert(
+                "¿Deseas crear una nueva comanda?",
+                "Esta accion es irreversible",
+                [
+                  {
+                    text: "Si",
+                    onPress: () => {
+                      setComanda(
+                        axios.post("http://192.168.100.24:3000/comandas", {
+                          cliente: "Publico general",
+                          total: 0,
+                          fecha: new Date(),
+                          estado: "inicio",
+                        })
+                      );
+                      <Orden comanda={comanda} />;
+                      navigation.navigate("Orden");
+                    },
+                  },
+                  {
+                    text: "No",
+                  },
+                ]
+              );
+            }}
           />
         </View>
         <View style={Appstyles.loginForm}>
+          <Text style={Appstyles.nuevoTexto} h4>
+            Lista de comandas
+          </Text>
           <FlatList
-            data={DATA}
+            data={state}
             renderItem={renderItem}
-            keyExtractor={(item) => item.id}
+            keyExtractor={(item) => item.idComanda}
             extraData={selectedId}
           />
         </View>

@@ -7,18 +7,19 @@ import {
 import { Button, Input, Text } from "react-native-elements";
 import axios from "axios";
 import Appstyles from "../styles/orden.sass";
-import LOGO_TTK from "../img/LOGO_TTK.png";
+import LOGO_PIZZA from "../img/LOGO_PIZZA.png";
 import { StatusBar } from "expo-status-bar";
 import { AppContext } from "../context/userContext";
 
-const OrdenView = ({ navigation }) => {
+const OrdenView = ({ navigation,comanda}) => {
+  //const { cliente, idComanda, total ,fecha,estado} = comanda;
   return (
     <>
       <StatusBar style="light" backgroundColor="#E84E11" />
       <KeyboardAvoidingView style={Appstyles.container} behavior="padding">
         <View style={Appstyles.logoContainer}>
           <Image
-            source={LOGO_TTK}
+            source={LOGO_PIZZA}
             style={{ ...Appstyles.logo, resizeMode: "contain" }}
           />
         </View>
@@ -76,7 +77,7 @@ const OrdenView = ({ navigation }) => {
             containerStyle={{
               width: "100%",
             }}
-            onPress={() => navigation.navigate("detOrden")}
+            onPress={() => navigation.navigate("DetalleComandas")}
           />
         </View>
         <View style={Appstyles.loginForm}>

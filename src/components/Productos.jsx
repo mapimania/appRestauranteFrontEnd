@@ -5,18 +5,19 @@ import {
   KeyboardAvoidingView,
   FlatList,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Button, Text } from "react-native-elements";
 import axios from "axios";
-import Appstyles from "../styles/categories.sass";
+import Appstyles from "../styles/productos.sass";
 import LOGO_PIZZA from "../img/LOGO_PIZZA.png";
 import { StatusBar } from "expo-status-bar";
 
-const CategoriesView = ({ navigation }) => {
+const ProductosView = ({ navigation }) => {
   const [state, setState] = useState(null);
   useEffect(() => {
     axios
-      .get("http://192.168.100.24:3000/categorias")
+      .get("http://192.168.100.24:3000/productos")
       .then(function (response) {
         setState(response.data);
       })
@@ -28,7 +29,9 @@ const CategoriesView = ({ navigation }) => {
   const Item = ({ item, onPress }) => (
     <TouchableOpacity onPress={onPress} style={Appstyles.textlistprincipal}>
       <Text style={Appstyles.textlistpr}>{item.nombre}</Text>
-      <Text style={Appstyles.textlist}>{item.descripcion}</Text>
+      <Text style={Appstyles.textlist}>
+        ${item.precio}, ingredientes: {item.ingredientes}
+      </Text>
     </TouchableOpacity>
   );
 
@@ -39,8 +42,11 @@ const CategoriesView = ({ navigation }) => {
       <Item
         item={item}
         onPress={() => {
-          navigation.navigate("Productos");
-          setSelectedId(item.idCategoria);
+          Alert.alert(
+            "Se agregó a la orden el producto: "+item.nombre
+          );
+          navigation.navigate("Orden");
+          setSelectedId(item.idProducto);
         }}
       />
     );
@@ -58,7 +64,7 @@ const CategoriesView = ({ navigation }) => {
         </View>
         <View style={Appstyles.loginTextContainer}>
           <Text style={Appstyles.loginText} h4>
-            Elige la categoria
+            Elige el producto
           </Text>
         </View>
         <View style={Appstyles.loginForm}>
@@ -86,7 +92,7 @@ const CategoriesView = ({ navigation }) => {
             containerStyle={{
               width: "100%",
             }}
-            onPress={() => navigation.navigate("Orden")}
+            onPress={() => navigation.navigate("Categories")}
           />
         </View>
         <View style={{ height: 100 }} />
@@ -95,4 +101,4 @@ const CategoriesView = ({ navigation }) => {
   );
 };
 
-export default CategoriesView;
+export default ProductosView;

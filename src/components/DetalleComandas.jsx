@@ -8,7 +8,7 @@ import {
 } from "react-native";
 import { Button, Text } from "react-native-elements";
 import axios from "axios";
-import Appstyles from "../styles/categories.sass";
+import Appstyles from "../styles/detallecomandas.sass";
 import LOGO_PIZZA from "../img/LOGO_PIZZA.png";
 import { StatusBar } from "expo-status-bar";
 
@@ -16,7 +16,7 @@ const CategoriesView = ({ navigation }) => {
   const [state, setState] = useState(null);
   useEffect(() => {
     axios
-      .get("http://192.168.100.24:3000/categorias")
+      .get("http://192.168.100.24:3000/detalle-comandas")
       .then(function (response) {
         setState(response.data);
       })
@@ -27,8 +27,9 @@ const CategoriesView = ({ navigation }) => {
 
   const Item = ({ item, onPress }) => (
     <TouchableOpacity onPress={onPress} style={Appstyles.textlistprincipal}>
-      <Text style={Appstyles.textlistpr}>{item.nombre}</Text>
-      <Text style={Appstyles.textlist}>{item.descripcion}</Text>
+      <Text style={Appstyles.textlistpr}>idDetalleComanda: {item.idDetalleComanda}</Text>
+      <Text style={Appstyles.textlist}>idProducto: {item.idProducto}</Text>
+      <Text style={Appstyles.textlist}>Cantidad: {item.cantidad}</Text>
     </TouchableOpacity>
   );
 
@@ -39,8 +40,7 @@ const CategoriesView = ({ navigation }) => {
       <Item
         item={item}
         onPress={() => {
-          navigation.navigate("Productos");
-          setSelectedId(item.idCategoria);
+          setSelectedId(item.idDetalleComanda);
         }}
       />
     );
