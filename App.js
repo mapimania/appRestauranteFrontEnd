@@ -4,7 +4,6 @@ import AppLoading from 'expo-app-loading';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import LoginScreen from './src/components/login';
 //mis componentes
 import OrdenesView from './src/components/Ordenes';
 import OrdenView from './src/components/Orden';
@@ -78,13 +77,6 @@ const App = () => {
           <Drawer.Screen
             name='DetalleComandas'
             component={DetalleComandasView}
-            options={{
-              headerShown: false,
-            }}
-          />
-          <Drawer.Screen
-            name='Login'
-            component={LoginScreen}
             options={{
               headerShown: false,
             }}

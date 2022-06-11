@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect ,useContext} from "react";
 import {
   View,
   Image,
@@ -11,12 +11,14 @@ import axios from "axios";
 import Appstyles from "../styles/detallecomandas.sass";
 import LOGO_PIZZA from "../img/LOGO_PIZZA.png";
 import { StatusBar } from "expo-status-bar";
+import { AppContext } from "../context/userContext";
 
 const CategoriesView = ({ navigation }) => {
+  const { server } = useContext(AppContext);
   const [state, setState] = useState(null);
   useEffect(() => {
     axios
-      .get("http://192.168.100.24:3000/detalle-comandas")
+      .get(`${server}/detalle-comandas`)
       .then(function (response) {
         setState(response.data);
       })

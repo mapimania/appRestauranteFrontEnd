@@ -1,143 +1,39 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useState ,useEffect} from "react";
 import axios from "axios";
 import { Alert } from "react-native";
 
 export const AppProvider = ({ children }) => {
-  const [categoria, setCategoria] = useState(null);
-  const [user, setUser] = useState(null);
-  const [currentLoad, setCurrentLoad] = useState(null);
-  const [currentDetail, setCurrentDetail] = useState(null);
-  const [charguesVer, setCharguesVer] = useState([]);
-  const [getingChargues, setGetingChargues] = useState(false);
-  const [charguesDetailVer, setCharguesDetailVer] = useState([]);
+  const [state, setState] = useState(null);
+  const [comanda, setComanda] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
+  const [cliente, setCliente] = useState(null);
 
-  const server = `http://192.168.100.24`;
-
-  const getCategorias =async () => {
-    await axios
-      .get("http://192.168.100.24:3000/categorias")
-      .then((res) => {
-        setCategoria(res.data);
-      })
-      .catch((err) => {
-        showAlertOk('Alerta', 'Error busque al encargado');
-      })
-  };
-
-  const DATA = [
-    {
-      id: "001",
-      nombre: "Juan",
-      descripcion: "Preparacion"
-    },
-    {
-      id: "002",
-      nombre: "Joel",
-      descripcion: "Entregado"
-    },
-    {
-      id: "003",
-      nombre: "Oscar",
-      descripcion: "preparacion"
-    },
-  ];
-
+  //const server = `http://192.168.100.24:3000/`; //casa
+  //const server = `http://192.168.0.33:3000/`; //oficina
+  const server = `http://192.168.1.111:3000/`; //escuela
   
-  const getCharguesListVer = async (Folio, Carga) => {
-    setGetingChargues(true);
-    await axios
-      .get(
-        `${server}/b_Get_Detalle_Cargas_Verificar.php?folio=${Folio}&carga=${Carga}`
-      )
-      .then((res) => {
-        if (res.data) {
-          console.log("llamada b_Get_Detalle_Cargas_Verificar");
-          setCharguesDetailVer(res.data[0].cargas_det_ver);
-        }
+
+  const getState=useEffect(() => {
+    axios
+      .get(`${server}/comandas`)
+      .then(function (response) {
+        setState(response.data);
       })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setGetingChargues(false);
+      .catch(function (error) {
+        console.log(error);
       });
-  };
-
-  const getChargueDetailsVer = async (Folio, Carga) => {
-    setGetingChargues(true);
-    await axios
-      .get(
-        `${server}/b_Get_Detalle_Cargas_Verificar.php?folio=${Folio}&carga=${Carga}`
-      )
-      .then((res) => {
-        if (res.data) {
-          console.log("llamada b_Get_Detalle_Cargas_Verificar");
-          setCharguesDetailVer(res.data[0].cargas_det_ver);
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      })
-      .finally(() => {
-        setGetingChargues(false);
-      });
-  };
-
-  const showAlertOk = (title, message) =>
-    Alert.alert(
-      title,
-      message,
-      [
-        {
-          text: "Ok",
-          style: "default",
-        },
-      ],
-      {
-        cancelable: false,
-      }
-    );
-
-  const handleLogout = () => {
-    setCharguesVer([]);
-  };
-
-  const postInicioVer = async (Clave_Usuario, Idh) => {
-    await axios
-      .post(
-        `${server}/c_Post_Update_Inicio_Verificar_Carga_Head.php?usuario=${Clave_Usuario}&idh=${Idh}`
-      )
-      .then((res) => {
-        if (res.data) {
-          console.log("actualizar inicio de carga");
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
+  }, [comanda]);
+  
   const initialState = {
     server,
-    user,
-    setUser,
-    currentLoad,
-    setCurrentLoad,
-    currentDetail,
-    setCurrentDetail,
-    charguesVer,
-    getCharguesListVer,
-    getingChargues,
-    showAlertOk,
-    handleLogout,
-    setCharguesVer,
-    charguesDetailVer,
-    setCharguesDetailVer,
-    getChargueDetailsVer,
-    categoria,
-    getCategorias,
-    DATA,
-    postInicioVer,
+    state,
+    getState,
+    comanda,
+    setComanda,
+    selectedId,
+    setSelectedId,
+    cliente,
+    setCliente
   };
 
   return (
@@ -147,23 +43,12 @@ export const AppProvider = ({ children }) => {
 
 export const AppContext = createContext({
   server: "",
-  user: [],
-  setUser: () => {},
-  currentLoad: [],
-  setCurrentLoad: () => {},
-  currentDetail: [],
-  setCurrentDetail: () => {},
-  charguesVer: [],
-  getCharguesListVer: () => {},
-  getingChargues: false,
-  showAlertOk: () => {},
-  handleLogout: () => {},
-  setCharguesVer: () => {},
-  charguesDetailVer: [],
-  setCharguesDetailVer: () => {},
-  getChargueDetailsVer: () => {},
-  categoria:[],
-  getCategorias:()=>{},
-  DATA:()=>{},
-  postInicioVer: () => {},
+  state:[],
+  getState:()=>{},
+  comanda:[],
+  setComanda:()=>{},
+  selectedId:[],
+  setSelectedId:()=>{},
+  cliente:[],
+  setCliente:()=>{},
 });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect,useContext } from "react";
 import {
   View,
   Image,
@@ -12,12 +12,14 @@ import axios from "axios";
 import Appstyles from "../styles/productos.sass";
 import LOGO_PIZZA from "../img/LOGO_PIZZA.png";
 import { StatusBar } from "expo-status-bar";
+import { AppContext } from "../context/userContext";
 
 const ProductosView = ({ navigation }) => {
+  const { server } = useContext(AppContext);
   const [state, setState] = useState(null);
   useEffect(() => {
     axios
-      .get("http://192.168.100.24:3000/productos")
+      .get(`${server}/productos`)
       .then(function (response) {
         setState(response.data);
       })
@@ -26,8 +28,8 @@ const ProductosView = ({ navigation }) => {
       });
   }, []);
 
-  const Item = ({ item, onPress }) => (
-    <TouchableOpacity onPress={onPress} style={Appstyles.textlistprincipal}>
+  const Item = ({ item, onPress,index }) => (
+    <TouchableOpacity onPress={onPress} style={Appstyles.textlistprincipal} key={index}>
       <Text style={Appstyles.textlistpr}>{item.nombre}</Text>
       <Text style={Appstyles.textlist}>
         ${item.precio}, ingredientes: {item.ingredientes}
@@ -47,6 +49,7 @@ const ProductosView = ({ navigation }) => {
           );
           navigation.navigate("Orden");
           setSelectedId(item.idProducto);
+          
         }}
       />
     );
